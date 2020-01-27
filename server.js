@@ -11,8 +11,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 app.use(express.static("db"));
-app.use("/", htmlR);
+
 app.use("/api", apiR);
+app.use("/", htmlR);
 
 app.listen(PORT, function () {
     console.log("App listening on PORT: " + PORT);
