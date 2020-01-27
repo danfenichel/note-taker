@@ -7,6 +7,17 @@ const writeFileA = util.promisify(fs.writeFile);
 class Store {
     constructor() {
         this.lastId = 0;
+
+        const data = fs.readFileA("./db.json", { encoding: "utf8" });
+        if(data.length > 0) {
+            let currentNotes = JSON.parse(data);
+            for (let i = 0; i < currentNotes.length; i++) {
+                const note = currentNotes[i];
+                if(this.lastId < note.id) {
+                    this.lastId = note.id;
+                }
+            }
+        }
     }
 
     read() {
