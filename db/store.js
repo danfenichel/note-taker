@@ -64,6 +64,18 @@ class Store {
     
     deleteNotes(id) {
         // * DELETE `/api/notes/:id` - Should recieve a query paramter containing the id of a note to delete. This means you'll need to find a way to give each note a unique `id` when it's saved. In order to delete a note, you'll need to read all notes from the `db.json` file, remove the note with the given `id` property, and then rewrite the notes to the `db.json` file.
+        return this.read()
+            .then(notes => {
+                notes = [].concat(JSON.parse(notes));
+                for (let i = 0; i < notes.length; i++) {
+                    const note = notes[i];
+                    if (note.id === id) {
+                        notes.splice(i, 1);
+                        break;
+                    }
+                }
+                this.write(notes);
+            });
     }
 }
 
